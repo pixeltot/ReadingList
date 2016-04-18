@@ -4,11 +4,11 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = Book.includes(:genres).search(params[:keyword]).filter(params[:filter])
+    @genres = Genre.all
+  # GET /books/1.json
   end
 
-  # GET /books/1
-  # GET /books/1.json
   def show
   end
 
@@ -71,4 +71,5 @@ class BooksController < ApplicationController
     def book_params
       params.require(:book).permit(:title, :author, :description, :amazon_id)
     end
+  
 end
